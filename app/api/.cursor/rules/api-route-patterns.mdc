@@ -1,0 +1,58 @@
+---
+description: API route patterns and best practices for Next.js App Router
+globs: 
+  - "**/route.ts"
+  - "**/route.tsx"
+alwaysApply: true
+---
+
+## API Route Guidelines
+
+### Route Handler Structure
+```typescript
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function GET(request: NextRequest) {
+  try {
+    // Implementation
+    return NextResponse.json({ data }, { status: 200 })
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    )
+  }
+}
+```
+
+### Error Handling
+- Always wrap route handlers in try-catch blocks
+- Return appropriate HTTP status codes
+- Provide meaningful error messages in development
+- Log errors appropriately for debugging
+- Use NextResponse.json() for consistent JSON responses
+
+### Request Validation
+- Validate request body using Zod schemas
+- Check required headers and parameters
+- Return 400 Bad Request for validation errors
+- Provide clear validation error messages
+
+### Response Patterns
+- Use consistent response structure across all endpoints
+- Include appropriate cache headers
+- Set CORS headers when needed
+- Return proper status codes (200, 201, 400, 401, 404, 500)
+
+### Performance Considerations
+- Implement request deduplication where appropriate
+- Use streaming responses for large data sets
+- Cache responses using Next.js caching strategies
+- Minimize database queries
+
+### Security
+- Validate and sanitize all input data
+- Implement rate limiting for public endpoints
+- Use environment variables for sensitive data
+- Never expose internal error details in production
+- Implement proper authentication when required

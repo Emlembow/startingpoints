@@ -1,0 +1,944 @@
+# LLM Rules File Generator - Comprehensive Requirements Document
+
+## 1. Project Overview
+
+### 1.1 Product Vision
+Create a web application that enables developers to generate customized rules files for LLM coding tools (Cursor, Claude, etc.) through an intuitive interface. Users select their target tool, tech stack, and preferences via checkboxes and radio buttons, then generate and download properly formatted rules files instantly in-browser.
+
+### 1.2 Core Value Proposition
+- **Zero Configuration**: No server setup required, all generation happens client-side
+- **Smart Compatibility**: Prevents invalid tech stack combinations automatically
+- **Multi-Tool Support**: Generates rules for different LLM coding tools
+- **Instant Gratification**: Generate and download immediately
+- **Based on Best Practices**: Built from proven rules in the awesome-cursorrules repository
+
+## 2. Technical Architecture
+
+### 2.1 Frontend Technology Stack
+- **Framework**: React with TypeScript
+- **Build Tool**: Vite or Next.js (for static generation)
+- **Styling**: Tailwind CSS
+- **State Management**: React Context or Zustand
+- **File Generation**: Browser-based (File API, Blob, URL.createObjectURL)
+- **Deployment**: Static hosting (Vercel, Netlify, GitHub Pages)
+
+### 2.2 Data Architecture
+- **Rules Templates**: JSON/TypeScript modules containing rule templates
+- **Tech Stack Definitions**: Compatibility matrix and metadata
+- **Generation Logic**: Template engine for combining rules
+- **Validation**: Client-side compatibility checking
+
+## 3. User Interface Design
+
+### 3.1 Layout Structure
+```
+Header
+├── Logo/Title
+├── Brief description
+└── GitHub link
+
+Main Content Area
+├── Tool Selection Section
+├── Tech Stack Configuration
+├── Advanced Options (collapsible)
+├── Preview Panel (optional)
+└── Generation Controls
+
+Footer
+├── Attribution to awesome-cursorrules
+├── GitHub repository link
+└── Version info
+```
+
+### 3.2 UI Components Specification
+
+#### 3.2.1 Tool Selection Section
+- **Component Type**: Radio button group
+- **Options**:
+  - Cursor (.cursorrules and .mdc formats)
+  - Claude (CLAUDE.md)
+  - VS Code with extensions
+  - General LLM rules
+- **Behavior**: Single selection, affects available options downstream
+
+#### 3.2.2 Technology Stack Selection (Based on awesome-cursorrules Analysis)
+
+#### 3.2.3 Tool Selection Section
+- **Component Type**: Radio button group
+- **Options**:
+  - Cursor (.cursorrules and .mdc formats)
+  - Claude (CLAUDE.md)
+  - Windsurf (.windsurfrules)
+  - Aider (CONVENTIONS.md)
+  - All Tools (generates files for all tools)
+- **Behavior**: Single selection, affects available options downstream
+
+#### 3.2.4 Technology Stack Selection (Auto-filled from preset, customizable)
+- React
+- Vue.js (Vue 3)
+- Angular
+- Svelte/SvelteKit
+- Solid.js
+- Qwik
+- Astro
+- HTML/Vanilla JavaScript
+- No frontend framework
+
+**Meta-Frameworks & Build Tools** (Checkboxes with smart filtering):
+- Next.js (React only) - Multiple variants available:
+  - Next.js 14 App Router
+  - Next.js 15 with React 19
+  - Next.js with TypeScript
+  - Next.js with Tailwind
+  - Next.js with SEO optimization
+- Nuxt.js (Vue only)
+- SvelteKit (Svelte only)
+- Vite
+- Tauri (for desktop apps)
+
+**Backend Frameworks & Runtimes** (Radio buttons - mutually exclusive):
+- Node.js
+- Python:
+  - Django
+  - FastAPI
+  - Flask
+- PHP:
+  - Laravel (including TALL stack)
+  - WordPress
+- Java (Spring Boot)
+- Go:
+  - Basic Go
+  - Go with Fiber
+  - Go ServeMux
+- Elixir (Phoenix)
+- Deno
+- No backend
+
+**Mobile Development** (Radio buttons - mutually exclusive):
+- React Native (Expo)
+- Flutter
+- SwiftUI (iOS)
+- Android (Jetpack Compose)
+- No mobile
+
+**CSS Frameworks & Styling** (Checkboxes):
+- Tailwind CSS (most popular in the repository)
+- Styled Components (React)
+- Chakra UI (React)
+- Material UI
+- shadcn/ui
+- Vanilla CSS
+- SCSS/Sass
+
+**Database & Backend Services** (Checkboxes):
+- Supabase (very popular in examples)
+- Firebase
+- MongoDB
+- PostgreSQL
+- Convex
+- Prisma ORM
+
+**State Management** (Checkboxes with framework filtering):
+- Redux (React only)
+- Zustand (React only)
+- Context API (React only)
+- Pinia (Vue only)
+- Vuex (Vue only)
+- NgRx (Angular only)
+
+**Testing Frameworks** (Checkboxes):
+- Jest
+- Vitest
+- Cypress
+- Playwright
+- Detox (React Native)
+- Testing Library
+
+**Development Best Practices** (Auto-selected in ALL presets, customizable):
+- ✅ **Code Quality Principles** (DRY, SOLID, KISS, YAGNI) - *Always included*
+- ✅ **Git Workflow** (Conventional commits, semantic versioning) - *Always included*
+- ✅ **Error Handling Patterns** (Proper exception handling, validation) - *Always included*
+- ✅ **Performance Optimization** (Web Vitals, image optimization) - *Always included*
+- ✅ **Security Best Practices** (OWASP guidelines, input validation) - *Always included*
+- ✅ **Project Organization** (file naming, directory structure) - *Always included*
+- ⬜ **Testing Standards** (TDD, unit testing, Arrange-Act-Assert) - *Optional add-on*
+- ⬜ **Advanced Performance** (Bundle optimization, caching strategies) - *Optional add-on*
+- ⬜ **Accessibility Guidelines** (WCAG compliance, semantic HTML) - *Optional add-on*
+
+*Note: First 6 practices are automatically included in every preset and highlighted with checkmarks. Users can uncheck if not wanted, but they start selected. Optional practices can be added based on project needs.*
+
+**Specialized Technologies** (Checkboxes):
+- Blockchain/Web3:
+  - Solidity (with Foundry or Hardhat)
+  - Wagmi/Viem
+- AI/ML:
+  - PyTorch
+  - scikit-learn
+  - LLM integrations
+- Chrome Extensions
+- WebAssembly
+- HTMX
+
+**Cloud & Deployment** (Checkboxes):
+- Vercel
+- Cloudflare
+- AWS
+- Docker/Containerization
+- Kubernetes
+
+**Game Development** (Checkboxes):
+- Unity (C#)
+- DragonRuby
+
+**Other Specialized Tools** (Checkboxes):
+- NVIDIA CUDA
+- Jupyter/Data Science
+- GitHub Actions/CI-CD
+- MkDocs Documentation
+
+### 3.3 Smart Compatibility Logic (Updated with Real Data)
+
+#### 3.3.4 Visual Auto-Selection Behavior
+```typescript
+interface PresetSelection {
+  name: string;
+  technologies: string[];
+  mandatoryPractices: string[];
+  visualBehavior: 'auto-select-and-highlight';
+}
+
+const presetBehavior = {
+  onPresetSelect: (preset: PresetSelection) => {
+    // 1. Auto-select all technology checkboxes/radios
+    selectTechnologyOptions(preset.technologies);
+    
+    // 2. Auto-select all mandatory best practices
+    selectBestPractices(preset.mandatoryPractices);
+    
+    // 3. Visually highlight auto-selected items
+    highlightAutoSelectedItems();
+    
+    // 4. Show "Selected by preset" indicators
+    showPresetIndicators();
+    
+    // 5. Allow user to modify any selection
+    enableCustomization();
+  }
+};
+```
+
+**User Experience Flow:**
+1. User clicks "Modern React Stack" preset
+2. Instantly sees all related checkboxes get selected:
+   - ✅ React (radio button)
+   - ✅ Next.js (checkbox)
+   - ✅ TypeScript (checkbox)
+   - ✅ Tailwind CSS (checkbox)
+   - ✅ shadcn/ui (checkbox)
+   - ✅ Code Quality Principles (checkbox)
+   - ✅ Git Workflow (checkbox)
+   - ✅ Performance Optimization (checkbox)
+   - ✅ All other mandatory practices
+3. User can immediately see what's included
+4. User can uncheck/modify any selection
+5. Generate button becomes active
+```typescript
+const exclusiveGroups = {
+  primaryFramework: ['react', 'vue', 'angular', 'svelte', 'solidjs', 'qwik', 'astro'],
+  metaFramework: ['nextjs', 'nuxtjs', 'sveltekit'],
+  backend: ['nodejs', 'python-django', 'python-fastapi', 'python-flask', 'laravel', 'spring-boot', 'go', 'elixir-phoenix'],
+  mobileFramework: ['react-native', 'flutter', 'swiftui', 'android-compose']
+};
+```
+
+#### 3.3.5 Mutually Exclusive Groups (Updated with Presets)
+```typescript
+const dependencies = {
+  // Meta-framework dependencies
+  'nextjs': { 
+    requires: ['react'], 
+    incompatible: ['vue', 'angular', 'svelte'],
+    variants: ['nextjs-14', 'nextjs-15', 'nextjs-app-router']
+  },
+  'nuxtjs': { 
+    requires: ['vue'], 
+    incompatible: ['react', 'angular', 'svelte'] 
+  },
+  'sveltekit': { 
+    requires: ['svelte'], 
+    incompatible: ['react', 'vue', 'angular'] 
+  },
+  
+  // State management dependencies
+  'redux': { requires: ['react'] },
+  'zustand': { requires: ['react'] },
+  'context-api': { requires: ['react'] },
+  'pinia': { requires: ['vue'] },
+  'vuex': { requires: ['vue'] },
+  'ngrx': { requires: ['angular'] },
+  
+  // Styling dependencies
+  'styled-components': { requires: ['react'] },
+  'chakra-ui': { requires: ['react'] },
+  'shadcn-ui': { requires: ['react'] },
+  
+  // Mobile dependencies
+  'react-native': { requires: ['react'] },
+  'expo': { requires: ['react-native'] },
+  
+  // Backend specific
+  'laravel-tall': { requires: ['laravel', 'tailwind', 'alpine-js', 'livewire'] },
+  'django': { requires: ['python'] },
+  'fastapi': { requires: ['python'] },
+  'flask': { requires: ['python'] },
+  
+  // Blockchain
+  'wagmi': { requires: ['react'] },
+  'viem': { requires: ['react'] },
+  'solidity-foundry': { incompatible: ['solidity-hardhat'] },
+  
+  // Testing
+  'detox': { requires: ['react-native'] },
+  'testing-library': { requires: ['react', 'vue', 'angular'] },
+  
+  // Special combinations found in repository
+  'nextjs-supabase': { requires: ['nextjs', 'supabase', 'typescript'] },
+  'nextjs-vercel': { requires: ['nextjs', 'vercel'] },
+  'tall-stack': { requires: ['laravel', 'tailwind', 'alpine-js', 'livewire'] }
+};
+```
+
+#### 3.3.6 Dependency Rules (Based on Repository Analysis)
+#### 3.3.7 Enhanced Popular Combinations (Now with Mandatory Fundamentals)
+```typescript
+const enhancedCombinations = [
+  {
+    name: "Modern React Stack",
+    technologies: ['react', 'nextjs', 'typescript', 'tailwind', 'shadcn-ui'],
+    mandatoryPractices: ['code-quality', 'git-workflow', 'error-handling', 'performance', 'security', 'project-organization'],
+    description: "Complete modern React development setup with best practices"
+  },
+  {
+    name: "Laravel TALL Stack", 
+    technologies: ['laravel', 'tailwind', 'alpine-js', 'livewire', 'php'],
+    mandatoryPractices: ['code-quality', 'git-workflow', 'error-handling', 'performance', 'security', 'project-organization', 'psr-12'],
+    description: "Full Laravel TALL stack with PHP-specific standards"
+  },
+  {
+    name: "Custom Configuration",
+    technologies: [],
+    mandatoryPractices: ['code-quality', 'git-workflow', 'error-handling', 'performance', 'security', 'project-organization'],
+    description: "Start with essential practices, add your own tech stack"
+  }
+];
+```
+
+**Why Every Preset Includes Fundamentals:**
+- **Consistency**: Every generated rules file has quality foundations
+- **Education**: Introduces best practices to developers who might skip them
+- **Completeness**: Rules files should guide behavior, not just technology
+- **Real-world**: Professional development always includes these practices
+- **Value**: Users get more than just tech configuration - they get professional guidance
+
+#### 3.3.3 UI Behavior
+- Disabled options are visually dimmed with tooltips explaining why
+- Selecting incompatible options automatically deselects conflicting choices
+- Warning indicators show potential conflicts before they're resolved
+
+## 4. Rules Generation System & Tool-Specific Best Practices
+
+### 4.1 Tool-Specific Format Requirements
+
+#### 4.1.1 Cursor Rules
+**Legacy Format (.cursorrules)**:
+- Single file in project root
+- Plain text/markdown format
+- Being deprecated, but still supported
+- Maximum recommended: 500 lines
+
+**Modern Format (.mdc files)**:
+- Located in `.cursor/rules/` directory
+- MDC (Markdown with Configuration) format
+- YAML frontmatter + markdown content
+- Supports multiple rule types: Manual, Auto Attached, Always
+
+**Best Practices**:
+- Keep rules concise and under 500 lines
+- Split large concepts into multiple, composable rules
+- Use specific, actionable instructions rather than vague guidance
+- Use glob patterns for Auto Attached rules (e.g., `**/*.tsx`)
+- Reference other files with `@filename.ts` for additional context
+
+**MDC Structure**:
+```yaml
+---
+description: "Brief description for Agent Requested rules"
+globs: "**/*.tsx,**/*.ts"  # File patterns for auto-application
+alwaysApply: false  # Set to true for Always type rules
+---
+# Rule content in markdown
+- Use functional components with hooks
+- Follow TypeScript strict mode
+- Implement proper error handling
+```
+
+#### 4.1.2 Claude Rules (CLAUDE.md)
+**Format**:
+- File named `CLAUDE.md` in project root
+- Automatically pulled into context by Claude Code
+- Plain markdown format
+- Can reference other files with `@path/to/import`
+- Supports both project memory (`./CLAUDE.md`) and user memory (`~/.claude/CLAUDE.md`)
+
+**Best Practices**:
+- Strike balance between comprehensive coverage and focused clarity
+- Avoid information overload that can decrease performance
+- Use consistent terminology throughout
+- Include project architecture, design decisions, and specific APIs
+- Keep concise and human-readable
+- Specify linting preferences, structured logging choices, and code style requirements
+
+**Structure Example**:
+```markdown
+# Project Overview
+Brief description of the project and its goals
+
+# Architecture
+Key architectural decisions and patterns
+
+# Code Style
+- Always use slog for structured logging
+- Identify nice fields to use .SetAttr()
+- Follow specific formatting guidelines
+
+# APIs and Libraries
+Commonly used methods and preferred libraries
+```
+
+#### 4.1.3 Windsurf Rules
+**Format**:
+- Located in `.windsurf/rules/` directory
+- Markdown (.md) files with optional YAML frontmatter
+- Individual files limited to 6000 characters
+- Combined global + workspace rules limited to 12,000 characters
+
+**Rule Activation Modes**:
+- **Manual**: Activated by @mentioning in Cascade
+- **Always On**: Always applied
+- **Model Decision**: AI decides based on natural language description
+- **Glob**: Applied to files matching pattern (e.g., `*.js`, `src/**/*.ts`)
+
+**Best Practices**:
+- Be specific and concise
+- Avoid generic rules that are already in AI training
+- Use clear formatting with bullet points and markdown
+- Focus on project-specific guidelines
+
+**Structure Example**:
+```markdown
+---
+description: "React component guidelines"
+globs: "src/components/**/*.tsx"
+---
+# React Component Rules
+- Use functional components with hooks
+- Implement proper prop validation
+- Use React.memo for performance optimization
+```
+
+#### 4.1.4 Aider Configuration
+**Format**:
+- Configuration via `.env` file, YAML config, or command line arguments
+- CONVENTIONS.md file for coding conventions
+- Can reference external style guides and linting rules
+
+**Best Practices**:
+- Use CONVENTIONS.md for coding standards that Aider forwards to LLM
+- Configure automatic linting and testing on AI changes
+- Leverage voice coding capabilities
+- Use --read parameter for static conventions/best practices
+- Use --message for dynamic prompts
+
+**Configuration Example**:
+```yaml
+# .aider.yaml
+model: gpt-4o
+auto-test: true
+auto-lint: true
+conventions: CONVENTIONS.md
+```
+
+### 4.2 Universal Template Structure
+```typescript
+interface UniversalRuleTemplate {
+  id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  category: 'framework' | 'language' | 'tooling' | 'testing' | 'styling';
+  compatibility: {
+    tools: ToolType[];
+    frameworks: string[];
+    requires?: string[];
+    incompatible?: string[];
+  };
+  content: {
+    cursor: {
+      cursorrules?: string;  // Legacy format
+      mdc?: {                // Modern format
+        frontmatter: {
+          description?: string;
+          globs?: string;
+          alwaysApply?: boolean;
+        };
+        content: string;
+      };
+    };
+    claude: {
+      markdown: string;      // CLAUDE.md content
+    };
+    windsurf: {
+      markdown: string;      // .windsurf/rules/*.md content
+      frontmatter?: {
+        description?: string;
+        globs?: string;
+      };
+    };
+    aider: {
+      conventions: string;   // CONVENTIONS.md content
+      config?: {            // .aider.yaml additions
+        [key: string]: any;
+      };
+    };
+  };
+  priority: number;
+  characterLimits: {
+    cursor: number;         // ~500 lines recommended
+    claude: number;         // No hard limit, but keep focused
+    windsurf: number;       // 6000 characters per file
+    aider: number;          // No hard limit
+  };
+}
+```
+
+### 4.3 Content Quality Guidelines
+
+#### 4.3.1 High-Quality Rule Characteristics
+Based on research across all tools, effective rules share these traits:
+
+**Specificity Over Generality**:
+- ✅ "Use snake_case for service names in our RPC pattern"
+- ❌ "Write good code"
+- ✅ "Follow service object patterns defined in @docs/architecture/services.md"
+- ❌ "Controllers should use service objects for complex business logic"
+
+**Actionable Instructions**:
+- Include concrete examples
+- Reference specific files when helpful (@service-template.ts)
+- Provide implementation patterns
+- Specify tool-specific preferences
+
+**Context-Aware Scope**:
+- Use glob patterns effectively (app/services/**/*.rb vs **/*.rb)
+- Exclude legacy directories (!app/models/legacy/**/*.rb)
+- Scope to specific file types and locations
+
+#### 4.3.2 Common Anti-Patterns to Avoid
+- **Too Broad**: Generic advice already in AI training
+- **Too Long**: Rules over 500 lines lose effectiveness
+- **Conflicting**: Multiple rules contradicting each other
+- **Vague**: Instructions without specific examples
+- **Outdated**: References to deprecated practices
+
+### 4.4 Rule Composition Algorithm
+```typescript
+function generateRules(selections: UserSelections): GeneratedRules {
+  // 1. Filter templates by tool and compatibility
+  const compatibleTemplates = filterByCompatibility(
+    allTemplates, 
+    selections.tool, 
+    selections.techStack
+  );
+  
+  // 2. Sort by priority and specificity
+  const prioritizedTemplates = sortByPriority(compatibleTemplates);
+  
+  // 3. Merge overlapping rules (avoid duplication)
+  const mergedRules = mergeDuplicateRules(prioritizedTemplates);
+  
+  // 4. Apply tool-specific formatting and limits
+  const formattedRules = applyToolFormatting(mergedRules, selections.tool);
+  
+  // 5. Validate character limits and constraints
+  const validatedRules = validateRuleLimits(formattedRules, selections.tool);
+  
+  // 6. Generate download package with proper file structure
+  return createDownloadPackage(validatedRules, selections);
+}
+
+// Tool-specific formatting functions
+function applyToolFormatting(rules: Rule[], tool: ToolType): FormattedRules {
+  switch (tool) {
+    case 'cursor':
+      return {
+        legacy: generateCursorRules(rules),
+        modern: generateMDCFiles(rules)
+      };
+    case 'claude':
+      return generateCLAUDEMD(rules);
+    case 'windsurf':
+      return generateWindsurfRules(rules);
+    case 'aider':
+      return generateAiderConventions(rules);
+  }
+}
+```
+
+### 4.5 Tool-Specific Rule Categories
+
+#### 4.5.1 Framework-Specific Rules
+**React Ecosystem**:
+- Functional components vs class components
+- Hook usage patterns (useState, useEffect, custom hooks)
+- State management patterns (Context, Redux, Zustand)
+- Performance optimization (React.memo, useMemo, useCallback)
+- TypeScript integration
+- Testing patterns (Testing Library, Jest)
+
+**Vue.js Ecosystem**:
+- Composition API vs Options API
+- Single File Components structure
+- Reactivity patterns
+- Pinia/Vuex state management
+- TypeScript with Vue
+- Testing with Vue Test Utils
+
+**Angular Ecosystem**:
+- Component architecture
+- Dependency injection patterns
+- RxJS usage
+- NgRx state management
+- Angular CLI preferences
+- Testing with Jasmine/Karma
+
+#### 4.5.2 Language-Specific Rules
+**TypeScript**:
+- Strict mode configuration
+- Interface vs type usage
+- Generic patterns
+- Utility types
+- Declaration files
+- tsconfig.json preferences
+
+**Python**:
+- PEP compliance (PEP 8, PEP 484)
+- Type hints usage
+- Virtual environment preferences
+- Package management (pip, poetry, uv)
+- Testing frameworks (pytest, unittest)
+- Linting (flake8, pylint, ruff)
+
+**JavaScript**:
+- ES6+ feature usage
+- Module system preferences
+- Async/await patterns
+- Error handling
+- Code style (Standard.js, Prettier)
+- Testing frameworks
+
+#### 4.5.3 Tooling and Workflow Rules
+**Build Tools**:
+- Webpack vs Vite vs Parcel
+- Bundle optimization
+- Development server configuration
+- Asset handling
+
+**Testing**:
+- Unit vs integration test patterns
+- Test file organization
+- Mock strategies
+- Coverage requirements
+
+**Linting and Formatting**:
+- ESLint configuration
+- Prettier settings
+- Pre-commit hooks
+- CI/CD integration
+
+**Version Control**:
+- Git workflow preferences
+- Commit message conventions
+- Branch naming
+- PR/MR templates
+
+## 5. File Generation & Download
+
+### 5.1 Supported Output Formats
+
+#### 5.1.1 Cursor Rules
+- **.cursorrules**: Traditional format, single file in project root
+- **.mdc files**: Modern format in `.cursor/rules/` directory
+
+#### 5.1.2 Claude Rules
+- **CLAUDE.md**: Markdown format with specific Claude instructions
+
+#### 5.1.3 Multiple File Output
+When generating multiple files:
+- Create ZIP archive containing proper directory structure
+- Include README with setup instructions
+- Provide individual file downloads as fallback
+
+### 5.2 Tool-Specific Download Requirements
+
+#### 5.2.1 Cursor Output Formats
+**Legacy Support**:
+- Single `.cursorrules` file for backward compatibility
+- Plain text format with deprecation notice
+
+**Modern Output** (Recommended):
+- ZIP archive containing `.cursor/rules/` directory structure
+- Multiple `.mdc` files organized by category:
+  ```
+  .cursor/
+  └── rules/
+      ├── base-typescript.mdc
+      ├── react-patterns.mdc
+      ├── testing-jest.mdc
+      └── styling-tailwind.mdc
+  ```
+- README.md with setup instructions
+
+#### 5.2.2 Claude Output Format
+- Single `CLAUDE.md` file for project root
+- Optional: Additional documentation in `.claude/` directory:
+  ```
+  CLAUDE.md
+  .claude/
+  ├── commands/
+  │   └── custom-workflows.md
+  └── docs/
+      └── architecture.md
+  ```
+
+#### 5.2.3 Windsurf Output Format
+- `.windsurf/rules/` directory structure
+- Multiple `.md` files respecting 6000 character limit per file
+- Automatic file splitting if content exceeds limits:
+  ```
+  .windsurf/
+  └── rules/
+      ├── base-framework.md
+      ├── testing-rules.md
+      └── styling-rules.md
+  ```
+
+#### 5.2.4 Aider Output Format
+- `CONVENTIONS.md` file for coding standards
+- Optional `.aider.yaml` configuration file
+- Documentation for setup:
+  ```
+  CONVENTIONS.md
+  .aider.yaml (optional)
+  docs/
+  └── aider-setup.md
+  ```
+
+### 5.3 Multi-Tool Download Package
+When generating for multiple tools simultaneously:
+```
+project-rules/
+├── cursor/
+│   └── .cursor/rules/*.mdc
+├── claude/
+│   └── CLAUDE.md
+├── windsurf/
+│   └── .windsurf/rules/*.md
+├── aider/
+│   ├── CONVENTIONS.md
+│   └── .aider.yaml
+├── README.md
+└── setup-instructions.md
+```
+
+## 6. User Journey & Experience
+
+### 6.1 Primary User Flow (Updated with Presets)
+```
+1. Land on homepage
+   ├── See clear value proposition
+   ├── View example before/after
+   └── Understand tool compatibility
+
+2. Choose quick preset or custom
+   ├── Select from 8 popular stack presets
+   ├── See instant preview of what's included
+   └── Option to choose "Custom Configuration"
+
+3. Select target tool(s)
+   ├── Choose between Cursor, Claude, Windsurf, Aider
+   ├── Option to generate for all tools at once
+   └── See tool-specific preview
+
+4. Review and customize (if needed)
+   ├── Preset auto-fills all technology selections
+   ├── Users can modify any preset selections
+   ├── Toggle development best practices
+   └── Preview generated rules (optional)
+
+5. Generate & download
+   ├── Click generate button
+   ├── See processing feedback
+   ├── Download single file or ZIP package
+   └── View setup instructions
+```
+
+### 6.2 Secondary Flows
+
+#### 6.2.1 Advanced Configuration
+- Custom rule priorities
+- Project-specific overrides
+- Team coding standards integration
+
+### 6.3 Error States & Edge Cases
+- No selections made → Disable generate button with helpful message
+- Incompatible selections → Auto-resolve with explanation
+- Empty generated rules → Show fallback with basic template
+- Download failures → Provide copy-to-clipboard fallback
+
+## 7. Content Management & Extensibility
+
+### 7.1 Rule Content Sources
+- **Initial Population**: Scrape/convert from awesome-cursorrules repository
+- **Community Contributions**: GitHub-based contribution system
+- **Automated Updates**: Periodic syncing with upstream sources
+
+### 7.2 Template Management
+```typescript
+const templateCategories = {
+  frameworks: ['react', 'vue', 'angular', 'svelte'],
+  backend: ['nodejs', 'python', 'php', 'rails'],
+  styling: ['tailwind', 'css-modules', 'styled-components'],
+  testing: ['jest', 'cypress', 'playwright'],
+  tools: ['typescript', 'eslint', 'prettier']
+};
+```
+
+### 7.3 Versioning Strategy
+- Semantic versioning for rule templates
+- Backward compatibility for URL configurations
+- Migration guides for breaking changes
+
+## 8. Technical Implementation Details
+
+### 8.1 State Management
+```typescript
+interface AppState {
+  selectedTool: ToolType;
+  techStack: {
+    framework: string;
+    backend: string;
+    styling: string[];
+    testing: string[];
+    tools: string[];
+  };
+  advanced: {
+    customRules: string;
+    priorities: Record<string, number>;
+  };
+  generated: {
+    content: string;
+    filename: string;
+    format: string;
+  };
+}
+```
+
+### 8.2 Validation System
+```typescript
+interface ValidationResult {
+  isValid: boolean;
+  warnings: Warning[];
+  errors: Error[];
+  suggestions: Suggestion[];
+}
+
+function validateSelection(state: AppState): ValidationResult;
+```
+
+### 8.3 Performance Considerations
+- Lazy load rule templates
+- Debounce validation checks
+- Memoize expensive computations
+- Progressive enhancement for large rule sets
+
+## 9. Quality Assurance
+
+### 9.1 Testing Strategy
+- **Unit Tests**: Rule generation logic, validation functions
+- **Integration Tests**: Full user flows, file generation
+- **E2E Tests**: Critical paths with Playwright
+- **Visual Tests**: Component rendering, responsive design
+
+### 9.2 Rule Quality Assurance
+- Validate generated rules against actual tools
+- Test compatibility with major project templates
+- Community feedback integration
+- Automated rule syntax checking
+
+## 10. Launch & Distribution
+
+### 10.1 MVP Feature Set (Updated)
+- Quick preset selection (8 popular stacks)
+- Cursor (.cursorrules and .mdc) generation
+- Basic technology customization
+- Single file and ZIP package downloads
+- Essential development best practices toggles
+
+### 10.2 Post-MVP Roadmap
+- Additional tool support (Claude, Windsurf, Aider)
+- More stack presets based on user feedback
+- Advanced customization options
+- Team collaboration features
+- API for programmatic access
+- Browser extension integration
+- Custom preset saving (future consideration)
+
+### 10.3 Success Metrics
+- **Adoption**: Downloads per month, unique users
+- **Quality**: Rule effectiveness, user satisfaction
+- **Community**: Contributions, GitHub stars
+- **Performance**: Generation speed, error rates
+
+## 11. Technical Constraints & Considerations
+
+### 11.1 Browser Compatibility
+- Modern browsers with File API support
+- Progressive enhancement for older browsers
+- Mobile-responsive design
+
+### 11.2 Security
+- Client-side only (no server data exposure)
+- Input sanitization for custom rules
+- Safe file generation practices
+
+### 11.3 Accessibility
+- WCAG 2.1 AA compliance
+- Keyboard navigation support
+- Screen reader compatibility
+- High contrast mode support
+
+## 12. Content Strategy
+
+### 12.1 Rule Curation Process
+1. **Source Identification**: Monitor awesome-cursorrules and community
+2. **Quality Review**: Test rules against real projects
+3. **Standardization**: Convert to common template format
+4. **Integration**: Add to generation system with proper metadata
+
+### 12.2 Documentation
+- Setup instructions for each tool
+- Best practices guide
+- Troubleshooting common issues
+- Video tutorials for complex workflows
+
+This comprehensive requirements document provides the foundation for building a robust, user-friendly LLM rules file generator that serves the growing community of AI-assisted developers while maintaining high standards for code quality and user experience.

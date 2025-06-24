@@ -1,0 +1,63 @@
+---
+description: Component structure and organization patterns for this project
+globs: 
+  - "*.tsx"
+  - "*.ts"
+alwaysApply: true
+---
+
+## Component Structure Guidelines
+
+### File Naming
+- Use kebab-case for component files (e.g., `tech-stack-selector.tsx`)
+- Match the file name with the exported component name
+- Group related components in the same file when they're tightly coupled
+
+### Component Organization
+```typescript
+// 1. Imports - organized by type
+import { useState, useEffect } from "react"
+import { ComponentProps } from "@/types"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+
+// 2. Type definitions
+interface ComponentNameProps {
+  // Props definition
+}
+
+// 3. Component definition
+export function ComponentName({ prop1, prop2 }: ComponentNameProps) {
+  // 4. Hooks
+  const [state, setState] = useState()
+  
+  // 5. Event handlers
+  const handleClick = () => {
+    // Handler logic
+  }
+  
+  // 6. Render
+  return (
+    <div className="...">
+      {/* Component JSX */}
+    </div>
+  )
+}
+```
+
+### State Management
+- Use custom hooks for complex state logic (see `hooks/` directory)
+- Keep component state minimal and lifted when shared
+- Use React Hook Form for all form state management
+
+### Props Patterns
+- Always define TypeScript interfaces for props
+- Use object destructuring in function parameters
+- Provide default values when appropriate
+- Document complex props with JSDoc comments
+
+### Composition Patterns
+- Prefer composition over inheritance
+- Use children props for flexible content
+- Implement compound components for complex UI patterns
+- Follow the established patterns in existing components like `generation-controls.tsx`

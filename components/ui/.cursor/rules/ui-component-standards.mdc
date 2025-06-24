@@ -1,0 +1,52 @@
+---
+description: Standards for maintaining and extending shadcn/ui components
+globs: 
+  - "*.tsx"
+  - "*.ts"
+alwaysApply: true
+---
+
+## UI Component Standards
+
+### DO NOT MODIFY
+These UI components are from shadcn/ui and should remain unchanged:
+- Core functionality should never be altered
+- Style customizations should be done via className props, not by editing the component
+- If changes are needed, create a wrapper component instead
+
+### Component Extension Pattern
+When you need custom behavior:
+```typescript
+// ❌ Wrong: Don't modify the UI component directly
+// ✅ Right: Create a wrapper
+import { Button } from "@/components/ui/button"
+
+export function CustomButton(props) {
+  return <Button {...props} className={cn("custom-styles", props.className)} />
+}
+```
+
+### Theming and Styling
+- All components use CSS variables defined in globals.css
+- Colors use the theme variables (e.g., `bg-primary`, `text-muted-foreground`)
+- Dark mode is handled automatically via the theme provider
+- Never hardcode colors - always use theme variables
+
+### Component API Consistency
+- All components accept className for styling overrides
+- Props follow React conventions and TypeScript interfaces
+- Components are fully accessible with proper ARIA attributes
+- Keyboard navigation is implemented where appropriate
+
+### Import Patterns
+```typescript
+// Always use absolute imports
+import { Button } from "@/components/ui/button"
+// Not: import { Button } from "../ui/button"
+```
+
+### Performance
+- Components are optimized for bundle size
+- Use dynamic imports for heavy components
+- Avoid unnecessary re-renders by using proper React patterns
+- Components support React Server Components where applicable
