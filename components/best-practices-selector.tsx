@@ -20,7 +20,7 @@ interface BestPractice {
 const bestPracticesOptions: BestPractice[] = [
   // Essential practices (always included)
   {
-    id: "clean-code",
+    id: "code-quality",
     label: "Code Quality Principles",
     description: "DRY, SOLID, KISS, YAGNI principles and clean code practices",
     mandatory: true,
@@ -105,7 +105,7 @@ const bestPracticesOptions: BestPractice[] = [
     category: "optional",
   },
   {
-    id: "ci-cd",
+    id: "cicd",
     label: "CI/CD Integration",
     description: "GitHub Actions, automated testing, and deployment pipelines",
     category: "optional",
@@ -199,7 +199,7 @@ export function BestPracticesSelector({ bestPractices, onBestPracticesChange }: 
                 </div>
                 {!isDisabled && (
                   <TemplatePreview 
-                    templateName={practice.id} 
+                    templateName={practice.id === "code-quality" ? "clean-code" : practice.id} 
                     displayName={practice.label} 
                   />
                 )}
@@ -262,7 +262,7 @@ export function BestPracticesSelector({ bestPractices, onBestPracticesChange }: 
                 </div>
                 {!isDisabled && (
                   <TemplatePreview 
-                    templateName={practice.id} 
+                    templateName={practice.id === "code-quality" ? "clean-code" : practice.id} 
                     displayName={practice.label} 
                   />
                 )}

@@ -267,7 +267,11 @@ export function TechStackSelector({ techStack, onTechStackChange, selectedPreset
                     </Label>
                     {!option.disabled && option.id !== "none" && (
                       <TemplatePreview 
-                        templateName={option.id === "css" ? "css-scss" : option.id} 
+                        templateName={
+                          option.id === "css" ? "css-scss" : 
+                          option.id === "tailwind" ? "tailwind-css" : 
+                          option.id
+                        } 
                         displayName={option.label} 
                       />
                     )}

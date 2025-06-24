@@ -23,6 +23,7 @@ export function useRulesGenerator() {
     "performance",
     "security",
   ])
+  const [customRules, setCustomRules] = useState<string>("")
   const [isGenerating, setIsGenerating] = useState(false)
 
   const canGenerate = useMemo(() => {
@@ -41,6 +42,7 @@ export function useRulesGenerator() {
         techStack,
         bestPractices,
         preset: selectedPreset,
+        customRules,
       })
 
       // Download based on tool selection
@@ -71,7 +73,7 @@ export function useRulesGenerator() {
     } finally {
       setIsGenerating(false)
     }
-  }, [selectedTool, techStack, bestPractices, selectedPreset, canGenerate])
+  }, [selectedTool, techStack, bestPractices, selectedPreset, customRules, canGenerate])
 
   return {
     selectedTool,
@@ -82,6 +84,8 @@ export function useRulesGenerator() {
     setTechStack,
     bestPractices,
     setBestPractices,
+    customRules,
+    setCustomRules,
     generateRules,
     isGenerating,
     canGenerate,

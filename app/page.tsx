@@ -8,6 +8,7 @@ import { PresetSelector } from "@/components/preset-selector"
 import { TechStackSelector } from "@/components/tech-stack-selector"
 import { BestPracticesSelector } from "@/components/best-practices-selector"
 import { GenerationControls } from "@/components/generation-controls"
+import { CustomRulesInput } from "@/components/custom-rules-input"
 import { useRulesGenerator } from "@/hooks/use-rules-generator"
 import Image from "next/image"
 
@@ -21,6 +22,8 @@ export default function HomePage() {
     setTechStack,
     bestPractices,
     setBestPractices,
+    customRules,
+    setCustomRules,
     generateRules,
     isGenerating,
     canGenerate,
@@ -139,12 +142,15 @@ export default function HomePage() {
             </CardContent>
           </Card>
 
+          {/* Custom Rules */}
+          <CustomRulesInput customRules={customRules} onCustomRulesChange={setCustomRules} />
+
           {/* Generation Controls */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                  5
+                  6
                 </div>
                 Generate & Download
               </CardTitle>

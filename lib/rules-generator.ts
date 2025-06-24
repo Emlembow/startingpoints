@@ -8,16 +8,22 @@ interface GenerationConfig {
   techStack: Partial<TechStack>
   bestPractices: string[]
   preset: PresetType
+  customRules?: string
 }
 
 export async function generateRulesContent(config: GenerationConfig): Promise<GeneratedRules> {
-  const { tool, techStack, bestPractices, preset } = config
+  const { tool, techStack, bestPractices, preset, customRules } = config
 
   // Load markdown files based on selections
   const markdownContents = await loadMarkdownRules(techStack, bestPractices)
   
   // Combine markdown contents into a single rules document
-  const combinedContent = combineMarkdownContent(markdownContents, techStack, bestPractices)
+  let combinedContent = combineMarkdownContent(markdownContents, techStack, bestPractices)
+  
+  // Append custom rules if provided
+  if (customRules) {
+    combinedContent += `\n\n## Custom Project Rules\n\n${customRules}`
+  }
 
   // Generate tool-specific files
   const files = await generateToolSpecificFiles(tool, combinedContent, config)
@@ -106,18 +112,20 @@ ${getProjectContext(config)}
 
 `
   
-  // Main project rules file with all combined content
-  files.push({
-    filename: "project-guidelines.mdc",
-    content: generateMDCFormat(
-      "Project Guidelines", 
-      config.preset + " project guidelines", 
-      ["**/*"], 
-      false, 
-      cursorHeader + content
-    ),
-    path: ".cursor/rules/",
-  })
+  // Only add project-guidelines.mdc if there are custom rules
+  if (config.customRules) {
+    files.push({
+      filename: "project-guidelines.mdc",
+      content: generateMDCFormat(
+        "Project Guidelines", 
+        "Custom project-specific guidelines and requirements", 
+        ["**/*"], 
+        true, // Always apply custom rules
+        config.customRules
+      ),
+      path: ".cursor/rules/",
+    })
+  }
   
   // Tech-specific rules
   if (config.techStack.frontend && markdownContents[TECH_FILE_MAPPINGS[config.techStack.frontend]]) {
@@ -145,6 +153,40 @@ ${getProjectContext(config)}
         cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.metaFramework]]
       ),
       path: ".cursor/rules/",
+    })
+  }
+  
+  // Language-specific rules (e.g., TypeScript)
+  if (config.techStack.language && markdownContents[TECH_FILE_MAPPINGS[config.techStack.language]]) {
+    files.push({
+      filename: `${config.techStack.language}-guidelines.mdc`,
+      content: generateMDCFormat(
+        `${config.techStack.language} guidelines`,
+        `Language-specific guidelines for ${config.techStack.language}`,
+        getLanguageGlobs(config.techStack.language),
+        false,
+        cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.language]]
+      ),
+      path: ".cursor/rules/",
+    })
+  }
+  
+  // Styling-specific rules (e.g., Tailwind, CSS)
+  if (config.techStack.styling?.length) {
+    config.techStack.styling.forEach(style => {
+      if (markdownContents[TECH_FILE_MAPPINGS[style]]) {
+        files.push({
+          filename: `${style}-styling.mdc`,
+          content: generateMDCFormat(
+            `${style} styling`,
+            `Styling guidelines for ${style}`,
+            getStylingGlobs(style),
+            false,
+            cursorHeader + markdownContents[TECH_FILE_MAPPINGS[style]]
+          ),
+          path: ".cursor/rules/",
+        })
+      }
     })
   }
   
@@ -282,6 +324,26 @@ function getMetaFrameworkGlobs(metaFramework: string): string[] {
     remix: ["**/routes/**", "**/*.tsx"],
   }
   return globMap[metaFramework] || ["**/*"]
+}
+
+function getLanguageGlobs(language: string): string[] {
+  const globMap: Record<string, string[]> = {
+    typescript: ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
+    javascript: ["**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
+    python: ["**/*.py"],
+    go: ["**/*.go"],
+  }
+  return globMap[language] || ["**/*"]
+}
+
+function getStylingGlobs(style: string): string[] {
+  const globMap: Record<string, string[]> = {
+    tailwind: ["**/*.tsx", "**/*.jsx", "**/*.html", "**/tailwind.config.*"],
+    css: ["**/*.css", "**/*.scss", "**/*.sass"],
+    "styled-components": ["**/*.tsx", "**/*.jsx", "**/*.styled.*"],
+    emotion: ["**/*.tsx", "**/*.jsx"],
+  }
+  return globMap[style] || ["**/*"]
 }
 
 function generateClaudeFormat(content: string, config: GenerationConfig): string {
@@ -460,7 +522,9 @@ Generated on ${new Date().toLocaleDateString()} for ${tool === "all" ? "all supp
 function getCursorRulesList(config: GenerationConfig): string {
   const rules = []
   
-  rules.push("- **project-guidelines.mdc** - Main project guidelines (includes all selected rules)")
+  if (config.customRules) {
+    rules.push("- **project-guidelines.mdc** - Custom project-specific guidelines and requirements")
+  }
   
   if (config.techStack.frontend) {
     rules.push(`- **${config.techStack.frontend}-patterns.mdc** - ${config.techStack.frontend} development patterns`)
@@ -468,6 +532,16 @@ function getCursorRulesList(config: GenerationConfig): string {
   
   if (config.techStack.metaFramework) {
     rules.push(`- **${config.techStack.metaFramework}-conventions.mdc** - ${config.techStack.metaFramework} conventions`)
+  }
+  
+  if (config.techStack.language) {
+    rules.push(`- **${config.techStack.language}-guidelines.mdc** - ${config.techStack.language} language guidelines`)
+  }
+  
+  if (config.techStack.styling?.length) {
+    config.techStack.styling.forEach(style => {
+      rules.push(`- **${style}-styling.mdc** - ${style} styling guidelines`)
+    })
   }
   
   config.bestPractices.forEach(practice => {
