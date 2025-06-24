@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'StartingPoints' }],
   openGraph: {
     title: 'StartingPoints - AI Coding Rules Generator',
-    description: 'Generate customized rules files for AI coding assistants',
+    description: 'Generate customized rules files for Cursor, Claude, Windsurf, and Aider. Set the perfect foundation for your AI coding assistant with tailored configurations.',
     type: 'website',
     images: [
       {
