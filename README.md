@@ -84,7 +84,7 @@ We welcome contributions! Here's how you can help:
 
 ### Adding New Rule Files
 
-1. Create a new markdown file in the `files/` directory
+1. Create a new markdown file in the `templates/` directory
 2. Follow the existing format and structure
 3. Update the mappings in `lib/markdown-loader.ts`
 4. Test the generation with your new rules
@@ -111,7 +111,7 @@ startingpoints/
 ├── components/            # React components
 │   ├── ui/               # shadcn/ui components
 │   └── ...               # Feature components
-├── files/                 # Markdown rule files
+├── templates/             # Markdown rule templates
 ├── hooks/                 # Custom React hooks
 ├── lib/                   # Utility functions
 ├── public/                # Static assets

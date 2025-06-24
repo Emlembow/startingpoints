@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'No files requested' }, { status: 400 })
     }
 
-    const filesDir = path.join(process.cwd(), 'files')
+    const templatesDir = path.join(process.cwd(), 'templates')
     const contents: Record<string, string> = {}
 
     for (const fileName of fileNames) {
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
         continue
       }
 
-      const filePath = path.join(filesDir, sanitizedFileName)
+      const filePath = path.join(templatesDir, sanitizedFileName)
       
       try {
         const content = await fs.readFile(filePath, 'utf-8')

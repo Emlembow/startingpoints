@@ -39,7 +39,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 We're always looking to expand our collection of rule files! Here's how to add new ones:
 
-1. **Create the markdown file** in `files/` directory
+1. **Create the markdown file** in `templates/` directory
    - Follow the existing naming convention (e.g., `framework-name.md`)
    - Use clear, concise language
    - Include practical examples where helpful
@@ -125,7 +125,7 @@ We're always looking to expand our collection of rule files! Here's how to add n
 
 ### Markdown Files
 
-For rule files in the `files/` directory:
+For rule templates in the `templates/` directory:
 
 - Start with a clear heading
 - Use bullet points for lists
@@ -146,9 +146,9 @@ startingpoints/
 │   ├── ui/               # shadcn/ui components
 │   ├── tool-selector.tsx  # Tool selection component
 │   └── ...               # Other feature components
-├── files/                 # Markdown rule files
+├── templates/             # Markdown rule templates
 │   ├── react.md          # React best practices
-│   └── ...               # Other rule files
+│   └── ...               # Other rule templates
 ├── hooks/                 # Custom React hooks
 ├── lib/                   # Utility functions
 │   ├── rules-generator.ts # Core generation logic
