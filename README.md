@@ -12,17 +12,6 @@
   Generate customized rules files for Cursor, Claude, Windsurf, and Aider. Set the perfect foundation for your AI coding assistant with battle-tested best practices.
 </p>
 
-<p align="center">
-  <a href="https://github.com/Emlembow/startingpoints/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/github/license/emlembow/startingpoints">
-  </a>
-  <a href="https://github.com/Emlembow/startingpoints/issues">
-    <img alt="Issues" src="https://img.shields.io/github/issues/emlembow/startingpoints">
-  </a>
-  <a href="https://github.com/Emlembow/startingpoints/stargazers">
-    <img alt="Stars" src="https://img.shields.io/github/stars/emlembow/startingpoints">
-  </a>
-</p>
 
 ## 🚀 Features
 
