@@ -1,7 +1,27 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
-  "private": true,
+  "name": "startingpoints",
+  "version": "1.0.0",
+  "description": "Generate customized rules files for AI coding assistants - Cursor, Claude, Windsurf, and Aider",
+  "keywords": [
+    "ai-coding",
+    "cursor",
+    "claude",
+    "windsurf",
+    "aider",
+    "developer-tools",
+    "code-generation",
+    "best-practices"
+  ],
+  "homepage": "https://github.com/Emlembow/startingpoints#readme",
+  "bugs": {
+    "url": "https://github.com/Emlembow/startingpoints/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emlembow/startingpoints.git"
+  },
+  "license": "MIT",
+  "author": "StartingPoints Contributors",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
