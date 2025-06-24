@@ -159,8 +159,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Add support for more AI coding tools
 - [ ] Expand rule files for additional frameworks
 - [ ] Add rule file validation
-- [ ] Create VS Code extension
-- [ ] Add rule sharing marketplace
 - [ ] Support for team rule templates
 
 ## 💬 Community
