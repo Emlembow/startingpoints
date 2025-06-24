@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { CheckCircle, Plus } from "lucide-react"
+import { TemplatePreview } from "@/components/template-preview"
 
 interface BestPractice {
   id: string
@@ -19,7 +20,7 @@ interface BestPractice {
 const bestPracticesOptions: BestPractice[] = [
   // Essential practices (always included)
   {
-    id: "code-quality",
+    id: "clean-code",
     label: "Code Quality Principles",
     description: "DRY, SOLID, KISS, YAGNI principles and clean code practices",
     mandatory: true,
@@ -196,6 +197,12 @@ export function BestPracticesSelector({ bestPractices, onBestPracticesChange }: 
                   </Label>
                   <p className={cn("text-sm mt-1", isDisabled ? "text-gray-600" : "text-green-700")}>{practice.description}</p>
                 </div>
+                {!isDisabled && (
+                  <TemplatePreview 
+                    templateName={practice.id} 
+                    displayName={practice.label} 
+                  />
+                )}
               </div>
             )
           })}
@@ -253,6 +260,12 @@ export function BestPracticesSelector({ bestPractices, onBestPracticesChange }: 
                   </Label>
                   <p className={cn("text-sm mt-1", isDisabled ? "text-gray-600" : "text-muted-foreground")}>{practice.description}</p>
                 </div>
+                {!isDisabled && (
+                  <TemplatePreview 
+                    templateName={practice.id} 
+                    displayName={practice.label} 
+                  />
+                )}
               </div>
             )
           })}

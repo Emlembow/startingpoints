@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
+import { TemplatePreview } from "@/components/template-preview"
 import type { TechStack } from "@/types/rules"
 import type { PresetType } from "@/components/preset-selector"
 
@@ -264,6 +265,12 @@ export function TechStackSelector({ techStack, onTechStackChange, selectedPreset
                         <div className="text-xs text-muted-foreground mt-1">Requires: {option.requires.join(", ")}</div>
                       )}
                     </Label>
+                    {!option.disabled && option.id !== "none" && (
+                      <TemplatePreview 
+                        templateName={option.id === "css" ? "css-scss" : option.id} 
+                        displayName={option.label} 
+                      />
+                    )}
                   </div>
                 )
               })}
