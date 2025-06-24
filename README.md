@@ -14,13 +14,13 @@
 
 <p align="center">
   <a href="https://github.com/Emlembow/startingpoints/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/github/license/Emlembow/startingpoints">
+    <img alt="License" src="https://img.shields.io/github/license/emlembow/startingpoints">
   </a>
   <a href="https://github.com/Emlembow/startingpoints/issues">
-    <img alt="Issues" src="https://img.shields.io/github/issues/Emlembow/startingpoints">
+    <img alt="Issues" src="https://img.shields.io/github/issues/emlembow/startingpoints">
   </a>
   <a href="https://github.com/Emlembow/startingpoints/stargazers">
-    <img alt="Stars" src="https://img.shields.io/github/stars/Emlembow/startingpoints">
+    <img alt="Stars" src="https://img.shields.io/github/stars/emlembow/startingpoints">
   </a>
 </p>
 
