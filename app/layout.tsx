@@ -10,6 +10,14 @@ export const metadata: Metadata = {
     title: 'StartingPoints - AI Coding Rules Generator',
     description: 'Generate customized rules files for AI coding assistants',
     type: 'website',
+    images: [
+      {
+        url: '/ogimage.png',
+        width: 1200,
+        height: 630,
+        alt: 'StartingPoints - AI Coding Rules Generator',
+      }
+    ],
   },
 }
 
