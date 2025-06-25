@@ -1,11 +1,13 @@
 "use client"
 
+import * as React from "react"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { TemplatePreview } from "@/components/template-preview"
+import { getDisabledOptions, autoCorrectSelections, isSelectionValid } from "@/lib/dependency-rules"
 import type { TechStack } from "@/types/rules"
 import type { PresetType } from "@/components/preset-selector"
 
@@ -127,43 +129,43 @@ const techOptions = {
 
 export function TechStackSelector({ techStack, onTechStackChange, selectedPreset }: TechStackSelectorProps) {
   const handleSelectionChange = (category: keyof TechStack, value: string, checked: boolean) => {
-    const currentCategory = techStack[category] || []
-
-    if (techOptions[category].type === "radio") {
-      // For radio options, handle language/backend conflicts
-      if (category === "backend" && checked) {
-        // If selecting a Python backend, auto-select Python language
-        if ((value === "django" || value === "fastapi") && techStack.language !== "python") {
-          onTechStackChange({
-            ...techStack,
-            language: "python",
-            backend: value,
-          })
-          return
-        }
-        // If selecting Go backend, auto-select Go language
-        if (value === "go" && techStack.language !== "go") {
-          onTechStackChange({
-            ...techStack,
-            language: "go",
-            backend: value,
-          })
-          return
-        }
+    if (!checked) {
+      // Simply remove the selection
+      if (techOptions[category].type === "radio") {
+        onTechStackChange({
+          ...techStack,
+          [category]: undefined,
+        })
+      } else {
+        const currentArray = Array.isArray(techStack[category]) ? techStack[category] : []
+        onTechStackChange({
+          ...techStack,
+          [category]: currentArray.filter((item) => item !== value),
+        })
       }
-      
+      return
+    }
+
+    // Check if selection is valid
+    const validation = isSelectionValid(category, value, techStack)
+    if (!validation.valid) {
+      // For invalid selections, we might want to show an error or auto-correct
+      console.warn(validation.reason)
+    }
+
+    // Auto-correct selections to maintain compatibility
+    const correctedSelections = autoCorrectSelections(category, value, techStack)
+    
+    if (techOptions[category].type === "radio") {
       onTechStackChange({
-        ...techStack,
-        [category]: checked ? value : undefined,
+        ...correctedSelections,
+        [category]: value,
       })
     } else {
-      // Checkbox logic
-      const currentArray = Array.isArray(currentCategory) ? currentCategory : []
-      const newArray = checked ? [...currentArray, value] : currentArray.filter((item) => item !== value)
-
+      const currentArray = Array.isArray(correctedSelections[category]) ? correctedSelections[category] : []
       onTechStackChange({
-        ...techStack,
-        [category]: newArray,
+        ...correctedSelections,
+        [category]: [...currentArray, value],
       })
     }
   }
@@ -172,17 +174,25 @@ export function TechStackSelector({ techStack, onTechStackChange, selectedPreset
     // First check if option is explicitly disabled (no file support)
     if (option.disabled) return true
     
-    if (!option.requires) return false
-
-    // Check if required dependencies are selected
-    return !option.requires.some((req: string) => {
-      // Check in all categories for the required dependency
-      return Object.entries(techStack).some(([cat, values]) => {
-        if (typeof values === "string") return values === req
-        if (Array.isArray(values)) return values.includes(req)
-        return false
+    // Check dependency rules
+    const disabledOptions = getDisabledOptions(techStack)
+    if (disabledOptions[category]?.has(option.id)) {
+      return true
+    }
+    
+    // Check explicit requires
+    if (option.requires) {
+      return !option.requires.some((req: string) => {
+        // Check in all categories for the required dependency
+        return Object.entries(techStack).some(([cat, values]) => {
+          if (typeof values === "string") return values === req
+          if (Array.isArray(values)) return values.includes(req)
+          return false
+        })
       })
-    })
+    }
+    
+    return false
   }
 
   const isOptionSelected = (category: keyof TechStack, value: string) => {
@@ -263,6 +273,9 @@ export function TechStackSelector({ techStack, onTechStackChange, selectedPreset
                       </div>
                       {option.requires && !option.disabled && (
                         <div className="text-xs text-muted-foreground mt-1">Requires: {option.requires.join(", ")}</div>
+                      )}
+                      {isDisabled && !option.disabled && !option.requires && (
+                        <div className="text-xs text-destructive mt-1">Incompatible with current selections</div>
                       )}
                     </Label>
                     {!option.disabled && option.id !== "none" && (
