@@ -46,6 +46,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
     ],
@@ -64,6 +65,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
     ],
@@ -84,6 +86,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
       "database",
@@ -102,6 +105,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
     ],
@@ -119,6 +123,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
       "database",
@@ -138,6 +143,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
     ],
@@ -155,6 +161,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
       "testing",
@@ -171,6 +178,7 @@ const presetOptions: PresetOption[] = [
     bestPractices: [
       "code-quality",
       "git-workflow",
+      "error-handling",
       "performance",
       "security",
     ],
