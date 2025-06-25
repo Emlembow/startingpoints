@@ -2,6 +2,7 @@ import type { ToolType } from "@/components/tool-selector"
 import type { PresetType } from "@/components/preset-selector"
 import type { TechStack, GeneratedRules } from "@/types/rules"
 import { loadMarkdownRules, combineMarkdownContent } from "./markdown-loader"
+import { compressText } from "./compression-utils"
 
 interface GenerationConfig {
   tool: ToolType
@@ -9,6 +10,7 @@ interface GenerationConfig {
   bestPractices: string[]
   preset: PresetType
   customRules?: string
+  compress?: boolean
 }
 
 export async function generateRulesContent(config: GenerationConfig): Promise<GeneratedRules> {
@@ -119,7 +121,8 @@ ${getProjectContext(config)}
         "Custom project-specific guidelines and requirements", 
         ["**/*"], 
         true, // Always apply custom rules
-        config.customRules
+        config.customRules,
+        config.compress
       ),
       path: ".cursor/rules/",
     })
@@ -134,7 +137,8 @@ ${getProjectContext(config)}
         `Best practices for ${config.techStack.frontend} development`,
         getFrameworkGlobs(config.techStack.frontend),
         false,
-        cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.frontend]]
+        cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.frontend]],
+        config.compress
       ),
       path: ".cursor/rules/",
     })
@@ -148,7 +152,8 @@ ${getProjectContext(config)}
         `Conventions and patterns for ${config.techStack.metaFramework}`,
         getMetaFrameworkGlobs(config.techStack.metaFramework),
         false,
-        cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.metaFramework]]
+        cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.metaFramework]],
+        config.compress
       ),
       path: ".cursor/rules/",
     })
@@ -163,7 +168,8 @@ ${getProjectContext(config)}
         `Language-specific guidelines for ${config.techStack.language}`,
         getLanguageGlobs(config.techStack.language),
         false,
-        cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.language]]
+        cursorHeader + markdownContents[TECH_FILE_MAPPINGS[config.techStack.language]],
+        config.compress
       ),
       path: ".cursor/rules/",
     })
@@ -180,7 +186,8 @@ ${getProjectContext(config)}
             `Styling guidelines for ${style}`,
             getStylingGlobs(style),
             false,
-            cursorHeader + markdownContents[TECH_FILE_MAPPINGS[style]]
+            cursorHeader + markdownContents[TECH_FILE_MAPPINGS[style]],
+            config.compress
           ),
           path: ".cursor/rules/",
         })
@@ -197,7 +204,8 @@ ${getProjectContext(config)}
         "Testing guidelines and patterns",
         ["**/*.test.*", "**/*.spec.*", "**/tests/**"],
         false,
-        cursorHeader + markdownContents[PRACTICE_FILE_MAPPINGS["testing"]]
+        cursorHeader + markdownContents[PRACTICE_FILE_MAPPINGS["testing"]],
+        config.compress
       ),
       path: ".cursor/rules/",
     })
@@ -211,7 +219,8 @@ ${getProjectContext(config)}
         "Code quality and linting standards",
         ["**/*"],
         true, // Always apply code quality rules
-        cursorHeader + markdownContents[PRACTICE_FILE_MAPPINGS["code-quality"]]
+        cursorHeader + markdownContents[PRACTICE_FILE_MAPPINGS["code-quality"]],
+        config.compress
       ),
       path: ".cursor/rules/",
     })
@@ -227,7 +236,8 @@ ${getProjectContext(config)}
           `Guidelines for ${practice}`,
           ["**/*"],
           false,
-          cursorHeader + markdownContents[PRACTICE_FILE_MAPPINGS[practice]]
+          cursorHeader + markdownContents[PRACTICE_FILE_MAPPINGS[practice]],
+          config.compress
         ),
         path: ".cursor/rules/",
       })
@@ -329,8 +339,8 @@ function getProjectContext(config: GenerationConfig): string {
   return context.join('\n')
 }
 
-function generateMDCFormat(title: string, description: string, globs: string[], alwaysApply: boolean, content: string): string {
-  return `---
+function generateMDCFormat(title: string, description: string, globs: string[], alwaysApply: boolean, content: string, compress?: boolean): string {
+  const mdcContent = `---
 description: ${description}
 globs: ${globs.join(", ")}
 alwaysApply: ${alwaysApply}
@@ -339,6 +349,8 @@ alwaysApply: ${alwaysApply}
 # ${title}
 
 ${content}`
+  
+  return applyCompressionIfEnabled(mdcContent, compress)
 }
 
 
@@ -382,6 +394,18 @@ function getStylingGlobs(style: string): string[] {
   return globMap[style] || ["**/*"]
 }
 
+function applyCompressionIfEnabled(content: string, compress?: boolean): string {
+  if (!compress) return content
+  
+  return compressText(content, {
+    removeStopwords: true,
+    removePunctuation: true,
+    removeSpaces: true,
+    useStemming: true,
+    stemmerType: 'porter'
+  })
+}
+
 function generateClaudeFormat(content: string, config: GenerationConfig): string {
   let claudeContent = `# Claude AI Assistant Rules
 
@@ -408,7 +432,7 @@ ${config.customRules}
 
 Remember to reference files with @filename when providing context about specific implementations.`
   
-  return claudeContent
+  return applyCompressionIfEnabled(claudeContent, config.compress)
 }
 
 function generateWindsurfFormat(content: string, config: GenerationConfig): string {
@@ -428,7 +452,7 @@ ${config.customRules}
   // Add the rest of the content
   windsurfContent += content
   
-  return windsurfContent
+  return applyCompressionIfEnabled(windsurfContent, config.compress)
 }
 
 function generateAiderFormat(content: string, config: GenerationConfig): string {
@@ -448,7 +472,7 @@ ${config.customRules}
   // Add the rest of the content
   aiderContent += content
   
-  return aiderContent
+  return applyCompressionIfEnabled(aiderContent, config.compress)
 }
 
 

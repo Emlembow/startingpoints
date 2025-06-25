@@ -31,7 +31,7 @@ export function useRulesGenerator() {
     return selectedTool && (Object.keys(techStack).length > 0 || bestPractices.length > 0)
   }, [selectedTool, techStack, bestPractices])
 
-  const generateRules = useCallback(async () => {
+  const generateRules = useCallback(async (options: { compress: boolean } = { compress: false }) => {
     if (!canGenerate) return
 
     setIsGenerating(true)
@@ -44,6 +44,7 @@ export function useRulesGenerator() {
         bestPractices,
         preset: selectedPreset,
         customRules,
+        compress: options.compress,
       })
 
       // Download based on tool selection

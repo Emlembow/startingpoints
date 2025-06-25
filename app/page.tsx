@@ -38,11 +38,12 @@ export default function HomePage() {
             <div className="flex items-center gap-3">
               <Image 
                 src="/startingpoints-logo.png" 
-                alt="StartingPoints Logo" 
+                alt="StartingPoints - AI Coding Rules Generator for Cursor, Claude, Windsurf, and Aider" 
                 width={300} 
                 height={90}
                 className="h-16 md:h-20 w-auto"
                 priority
+                loading="eager"
               />
             </div>
             <Button variant="outline" size="sm" asChild className="bg-white text-black">
@@ -58,7 +59,7 @@ export default function HomePage() {
       <main className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold tracking-tight mb-4">Your Starting Point for AI-Powered Development</h2>
+          <h1 className="text-4xl font-bold tracking-tight mb-4">Your Starting Point for AI-Powered Development</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Generate customized rules files for Cursor, Claude, Windsurf, and Aider. Set the perfect foundation 
             for your AI coding assistant with battle-tested best practices.
