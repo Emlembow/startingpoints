@@ -20,10 +20,8 @@ export async function generateRulesContent(config: GenerationConfig): Promise<Ge
   // Combine markdown contents into a single rules document
   let combinedContent = combineMarkdownContent(markdownContents, techStack, bestPractices)
   
-  // Append custom rules if provided
-  if (customRules) {
-    combinedContent += `\n\n## Custom Project Rules\n\n${customRules}`
-  }
+  // Don't append custom rules here for single-file outputs
+  // They will be handled in the format-specific functions
 
   // Generate tool-specific files
   const files = await generateToolSpecificFiles(tool, combinedContent, config)
@@ -59,14 +57,14 @@ async function generateToolSpecificFiles(tool: ToolType, content: string, config
     case "windsurf":
       files.push({
         filename: ".windsurfrules",
-        content: content,
+        content: generateWindsurfFormat(content, config),
       })
       break
 
     case "aider":
       files.push({
         filename: "CONVENTIONS.md",
-        content: content,
+        content: generateAiderFormat(content, config),
       })
       files.push({
         filename: ".aider.yaml",
@@ -80,8 +78,8 @@ async function generateToolSpecificFiles(tool: ToolType, content: string, config
       files.push(...cursorFiles)
       files.push(
         { filename: "CLAUDE.md", content: generateClaudeFormat(content, config) },
-        { filename: ".windsurfrules", content },
-        { filename: "CONVENTIONS.md", content },
+        { filename: ".windsurfrules", content: generateWindsurfFormat(content, config) },
+        { filename: "CONVENTIONS.md", content: generateAiderFormat(content, config) },
         { filename: ".aider.yaml", content: generateAiderConfig(config) },
       )
       break
@@ -385,15 +383,72 @@ function getStylingGlobs(style: string): string[] {
 }
 
 function generateClaudeFormat(content: string, config: GenerationConfig): string {
-  return `# Claude AI Assistant Rules
+  let claudeContent = `# Claude AI Assistant Rules
 
-${content}
+`
+  
+  // Add custom rules at the top if provided
+  if (config.customRules) {
+    claudeContent += `## Custom Rules & Requirements
+
+${config.customRules}
+
+`
+  }
+  
+  // Add the rest of the content
+  claudeContent += content
+  
+  // Add footer
+  claudeContent += `
 
 ## Project-Specific Context
 - Configuration: ${config.preset}
 - Generated: ${new Date().toLocaleDateString()}
 
 Remember to reference files with @filename when providing context about specific implementations.`
+  
+  return claudeContent
+}
+
+function generateWindsurfFormat(content: string, config: GenerationConfig): string {
+  let windsurfContent = `# Windsurf AI Assistant Rules
+
+`
+  
+  // Add custom rules at the top if provided
+  if (config.customRules) {
+    windsurfContent += `## Custom Rules & Requirements
+
+${config.customRules}
+
+`
+  }
+  
+  // Add the rest of the content
+  windsurfContent += content
+  
+  return windsurfContent
+}
+
+function generateAiderFormat(content: string, config: GenerationConfig): string {
+  let aiderContent = `# Aider Coding Conventions
+
+`
+  
+  // Add custom rules at the top if provided
+  if (config.customRules) {
+    aiderContent += `## Custom Rules & Requirements
+
+${config.customRules}
+
+`
+  }
+  
+  // Add the rest of the content
+  aiderContent += content
+  
+  return aiderContent
 }
 
 
