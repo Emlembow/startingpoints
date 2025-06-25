@@ -134,7 +134,7 @@ export default function HomePage() {
                 Development Best Practices
               </CardTitle>
               <CardDescription>
-                Essential practices are included by default, add optional ones as needed
+                Essential practices are selected by default, customize based on your needs
               </CardDescription>
             </CardHeader>
             <CardContent>

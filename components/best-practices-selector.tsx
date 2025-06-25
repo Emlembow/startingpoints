@@ -134,8 +134,9 @@ export function BestPracticesSelector({ bestPractices, onBestPracticesChange }: 
     if (checked) {
       onBestPracticesChange([...bestPractices, practiceId])
     } else {
-      // Don't allow unchecking mandatory practices that are not disabled
-      if (practice?.mandatory && !practice?.disabled) return
+      // Allow unchecking mandatory practices (user explicitly requested this)
+      // Only prevent unchecking if the practice is disabled
+      if (practice?.disabled) return
 
       onBestPracticesChange(bestPractices.filter((id) => id !== practiceId))
     }
@@ -154,8 +155,8 @@ export function BestPracticesSelector({ bestPractices, onBestPracticesChange }: 
             Essential Best Practices
           </h3>
           <p className="text-sm text-muted-foreground mb-4">
-            These practices are automatically included in every rules file and form the foundation of professional
-            development.
+            These practices form the foundation of professional development and are selected by default.
+            You can customize selections based on your project needs.
           </p>
           <Separator />
         </div>
@@ -176,7 +177,7 @@ export function BestPracticesSelector({ bestPractices, onBestPracticesChange }: 
                 <Checkbox
                   id={practice.id}
                   checked={isSelected && !isDisabled}
-                  disabled={isDisabled || practice.mandatory}
+                  disabled={isDisabled}
                   onCheckedChange={(checked) => handlePracticeChange(practice.id, checked as boolean)}
                   className="mt-1"
                 />
