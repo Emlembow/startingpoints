@@ -39,7 +39,6 @@ const bestPracticesOptions: BestPractice[] = [
     description: "Proper exception handling, validation, and error boundaries",
     mandatory: true,
     category: "essential",
-    disabled: true, // No file yet
   },
   {
     id: "performance",
@@ -61,7 +60,6 @@ const bestPracticesOptions: BestPractice[] = [
     description: "File naming conventions, directory structure, and code organization",
     mandatory: true,
     category: "essential",
-    disabled: true, // No file yet
   },
 
   // Optional practices
@@ -76,21 +74,18 @@ const bestPracticesOptions: BestPractice[] = [
     label: "Accessibility Guidelines",
     description: "WCAG compliance, semantic HTML, and inclusive design",
     category: "optional",
-    disabled: true, // No file yet
   },
   {
     id: "advanced-performance",
     label: "Advanced Performance",
     description: "Bundle optimization, caching strategies, and advanced optimizations",
     category: "optional",
-    disabled: true, // No file yet
   },
   {
     id: "documentation",
     label: "Documentation Standards",
     description: "Code comments, API documentation, and README best practices",
     category: "optional",
-    disabled: true, // No file yet
   },
   {
     id: "api-design",
@@ -109,14 +104,12 @@ const bestPracticesOptions: BestPractice[] = [
     label: "CI/CD Integration",
     description: "GitHub Actions, automated testing, and deployment pipelines",
     category: "optional",
-    disabled: true, // No file yet
   },
   {
     id: "monitoring",
     label: "Monitoring & Logging",
     description: "Error tracking, performance monitoring, and structured logging",
     category: "optional",
-    disabled: true, // No file yet
   },
 ]
 

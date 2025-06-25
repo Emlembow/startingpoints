@@ -241,21 +241,58 @@ ${getProjectContext(config)}
 
 // Add these constants at the top of the file
 const TECH_FILE_MAPPINGS: Record<string, string> = {
+  // Languages
+  php: 'php.md',
+  java: 'java.md',
+  rust: 'rust.md',
+  // Frontend frameworks
   react: 'react.md',
   vue: 'vue.md',
   angular: 'angular.md',
   svelte: 'svelte.md',
+  solidjs: 'solidjs.md',
+  qwik: 'qwik.md',
+  astro: 'astro.md',
+  
+  // Meta-frameworks
   nextjs: 'nextjs.md',
+  nuxtjs: 'nuxtjs.md',
+  sveltekit: 'sveltekit.md',
+  vite: 'vite.md',
+  
+  // Backend frameworks
   nodejs: 'nodejs.md',
   django: 'django.md',
   fastapi: 'fastapi.md',
   laravel: 'laravel.md',
+  'python-flask': 'python-flask.md',
+  'spring-boot': 'spring-boot.md',
   go: 'go.md',
+  
+  // Languages
   typescript: 'typescript.md',
   python: 'python.md',
+  
+  // Styling
   tailwind: 'tailwind-css.md',
   css: 'css-scss.md',
+  'material-ui': 'material-ui.md',
+  'chakra-ui': 'chakra-ui.md',
+  'shadcn-ui': 'shadcn-ui.md',
+  
+  // Mobile
   flutter: 'flutter.md',
+  
+  // Testing
+  jest: 'jest.md',
+  vitest: 'vitest.md',
+  
+  // State Management
+  redux: 'redux.md',
+  zustand: 'zustand.md',
+  
+  // Databases
+  postgresql: 'postgresql.md',
 }
 
 const PRACTICE_FILE_MAPPINGS: Record<string, string> = {
@@ -266,6 +303,7 @@ const PRACTICE_FILE_MAPPINGS: Record<string, string> = {
   'git-workflow': 'git-workflow.md',
   'api-design': 'api-design.md',
   'database': 'database.md',
+  'error-handling': 'error-handling.md',
 }
 
 function getProjectContext(config: GenerationConfig): string {
