@@ -20,6 +20,7 @@ export function useRulesGenerator() {
   const [bestPractices, setBestPractices] = useState<string[]>([
     "code-quality",
     "git-workflow",
+    "error-handling",
     "performance",
     "security",
   ])

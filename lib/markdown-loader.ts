@@ -42,6 +42,7 @@ const PRACTICE_FILE_MAPPINGS: Record<string, string> = {
   'security': 'security.md',
   'performance': 'performance.md',
   'git-workflow': 'git-workflow.md',
+  'error-handling': 'error-handling.md',
   'api-design': 'api-design.md',
   'database': 'database.md',
 }
