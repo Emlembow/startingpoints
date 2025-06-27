@@ -595,6 +595,21 @@ Generated on ${new Date().toLocaleDateString()} using the ${config.preset} prese
 2. The .cursor/rules/ directory will be created with all rule files
 3. Cursor will automatically detect and apply these rules
 
+### ⚠️ Important for Mac/Linux Users
+
+The `.cursor` folder is hidden by default on Mac and Linux systems. If you don't see it after extraction:
+
+**Mac Users:**
+- Press `Cmd + Shift + .` in Finder to show hidden files
+- Or use Terminal: `ls -la` to see all files
+
+**Linux Users:**
+- Press `Ctrl + H` in your file manager to show hidden files
+- Or use Terminal: `ls -la` to see all files
+
+**Windows Users:**
+- The .cursor folder should be visible by default
+
 ## Included Rules
 
 ${getCursorRulesList(config)}
