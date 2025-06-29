@@ -120,7 +120,7 @@ const techOptions = {
       { id: "jest", label: "Jest", popular: true },
       { id: "vitest", label: "Vitest" },
       { id: "cypress", label: "Cypress", disabled: true },
-      { id: "playwright", label: "Playwright", disabled: true },
+      { id: "playwright", label: "Playwright" },
       { id: "testing-library", label: "Testing Library", disabled: true },
       { id: "none", label: "None" },
     ],
