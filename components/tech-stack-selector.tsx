@@ -104,7 +104,7 @@ const techOptions = {
     title: "Database & Services",
     type: "checkbox" as const,
     options: [
-      { id: "supabase", label: "Supabase", popular: true, disabled: true },
+      { id: "supabase", label: "Supabase", popular: true },
       { id: "firebase", label: "Firebase", disabled: true },
       { id: "postgresql", label: "PostgreSQL" },
       { id: "mongodb", label: "MongoDB", disabled: true },
